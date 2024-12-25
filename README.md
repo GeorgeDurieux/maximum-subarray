@@ -17,35 +17,37 @@ The Maximum Subarray Finder project identifies the contiguous subarray within a 
 
 ## Kadane's Algorithm Explained
 
-Kadane's Algorithm works by iterating through the array while maintaining two variables:
-1. **Current Sum (`currentSum`)**: The maximum sum of the subarray ending at the current position.
-2. **Global Maximum (`maxSum`)**: The maximum sum encountered so far.
+In this implementation, Kadane's Algorithm identifies the subarray with the largest sum by maintaining:
+1. **Local Maximum** (`localMaximum`): The maximum sum of the subarray ending at the current position.
+2. **Global Maximum** (`globalMaximum`): The largest subarray sum encountered so far.
+3. **Start and End Indices**: Indicate the subarray boundaries.
+
+### Procedure:
+- Start by initializing `localMaximum` to the first element and `globalMaximum` to a very small value.
+- Traverse the array while updating:
+  - `localMaximum` to the maximum of either extending the current subarray or starting fresh at the current element.
+  - `globalMaximum` if the new `localMaximum` exceeds it.
+  - Subarray boundaries whenever `globalMaximum` is updated.
 
 ### Visual Example:
-Given an array: `[−2, 1, −3, 4, −1, 2, 1, −5, 4]`
+Given array: `[-2, 1, -3, 4, -1, 2, 1, -5, 4]`
 
-1. Start with `currentSum = 0` and `maxSum = -∞`.
-2. Traverse the array:
-   - For each element, calculate `currentSum = max(element, currentSum + element)`.
-   - Update `maxSum = max(maxSum, currentSum)` if `currentSum` exceeds it.
-
-Intermediate steps:
-- Step 1: `currentSum = -2`, `maxSum = -2`
-- Step 2: `currentSum = 1`, `maxSum = 1`
-- Step 3: `currentSum = -2`, `maxSum = 1`
-- Step 4: `currentSum = 4`, `maxSum = 4`
-- Step 5: `currentSum = 3`, `maxSum = 4`
-- ...
-- Final: Maximum subarray `[4, −1, 2, 1]` with sum `6`.
+1. Initialize: `localMaximum = -2`, `globalMaximum = -2`, `start = 0`, `end = 0`.
+2. Traverse:
+   - At `1`: `localMaximum = 1`, update `globalMaximum = 1`, update indices to `start = 1`, `end = 1`.
+   - At `4`: `localMaximum = 4`, update `globalMaximum = 6`, update indices to `start = 3`, `end = 6`.
+   - Continue updating as necessary.
+3. Final output:
+   - Maximum subarray: `[4, -1, 2, 1]`
+   - Sum: `6`.
 
 ## Why O(n) Complexity?
 
-Kadane's Algorithm has a time complexity of **O(n)** because:
-1. It iterates through the array only once.
-2. For each element, only constant-time operations are performed:
-   - Comparing values for `currentSum` and `maxSum`.
-   - Updating variables.
+The algorithm runs in **O(n)** time because it:
+1. Iterates through the array exactly once.
+2. Performs constant-time operations (comparisons and updates) for each element.
 
+No nested loops or additional traversals are required, ensuring optimal performance.
 Thus, the algorithm efficiently finds the solution in linear time, making it ideal for large arrays.
 
 ## License
